@@ -11,28 +11,40 @@
     }
    }
 
-
+   
     let idChannel = 'UC_x5XG1OV2P6uZZ5FSM9Ttw'
     let part = 'statistics, brandingSettings'
 
     let client = new HttpClient();
-    let nameChannel = document.querySelector('#name-channel');
+    let titleChannel = document.querySelector('#title-channel');
     let descriptionChannel = document.querySelector('#description-channel');
     let countChannel = document.querySelector('#count');
     let imageChannel = document.querySelector('#image-channel');
     let viewed = document.querySelector('#viewed');
-    let target = document.querySelector('#target');
     
+    let form = document.querySelector('#form');
 
-    let showStat = () =>{
-    client.get(`https://www.googleapis.com/youtube/v3/channels?part=${part}&key=AIzaSyC-uLhGigJvmCrz_ZcByT-u4bF9S8K9Elo&id=${idChannel}`, (response) => {
+    let showStat = (id) =>{
+    client.get(`https://www.googleapis.com/youtube/v3/channels?part=${part}&key=AIzaSyC-uLhGigJvmCrz_ZcByT-u4bF9S8K9Elo&id=${id}`, (response) => {
         let info = JSON.parse(response).items[0];       
         countChannel.innerText = info.statistics.subscriberCount;
-        nameChannel.innerText = info.brandingSettings.channel.title;
-        descriptionChannel.innerText = info.brandingSettings.channel.descriptio;
+        titleChannel.innerText = info.brandingSettings.channel.title;
+        descriptionChannel.innerText = info.brandingSettings.channel.description;
         viewed.innerText = info.statistics.viewCount;
-        target.innerText = 2000000 - info.statistics.subscriberCount;
         imageChannel.src = info.brandingSettings.image.bannerImageUrl;
     })
 }
-showStat();
+
+let search = (nameChannel) =>{
+    client.get(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyC-uLhGigJvmCrz_ZcByT-u4bF9S8K9Elo&maxResults=1&type=channel&q=${nameChannel}`, (response) => {
+        let info = JSON.parse(response).items[0].snippet.channelId;
+        showStat(info);})
+}
+
+form.addEventListener('submit' , (event) => {
+    event.preventDefault();
+    let nameChannel = document.querySelector('#name-channel').value;
+    search(nameChannel);
+})
+
+showStat(idChannel);
