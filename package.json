@@ -1,0 +1,20 @@
+{
+  "name": "youtube-counter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "babel src/js -d assets/js --presets es2015 -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrasnovR/youtube-counter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrasnovR/youtube-counter/issues"
+  },
+  "homepage": "https://github.com/KrasnovR/youtube-counter#readme"
+}
